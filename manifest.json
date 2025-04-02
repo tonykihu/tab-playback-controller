@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Tab Playback Controller",
-    "version": "1.1",
+    "version": "1.0.0",
     "description": "Control audio playback across tabs in Chrome-based browsers",
     "permissions": [
       "tabs",
