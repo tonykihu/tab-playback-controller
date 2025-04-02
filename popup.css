@@ -1,0 +1,57 @@
+body { 
+width: 350px;
+padding: 10px;
+font-family: Arial, sans-serif;
+font-size: 14px;
+}
+
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+}
+
+.tab {
+display: flex;
+align-items: center;
+padding: 8px 5px;
+border-bottom: 1px solid #eee;
+}
+
+.tab-info {
+flex-grow: 1;
+display: flex;
+align-items: center;
+min-width: 0;
+}
+
+.tab img {
+width: 16px;
+height: 16px;
+margin-right: 8px;
+flex-shrink: 0;
+}
+
+.tab-title {
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+button {
+padding: 5px 10px;
+margin-left: 8px;
+cursor: pointer;
+flex-shrink: 0;
+}
+
+.controls {
+margin-top: 10px;
+display: flex;
+gap: 5px;
+}
+
+#refreshBtn {
+padding: 5px;
+}
