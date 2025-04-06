@@ -65,9 +65,9 @@ A Chrome browser extension that helps you control audio and video playback acros
 - **Event Listeners**: Monitors tab updates, creation, and removal
 - **UI Updates**: Real-time interface updates reflecting tab states
 
-## Browser Compatibility
+## Browser Compatibility [Chromium-based]
 
-- Chrome (tested)
+- Vivaldi Browser (tested)
 - Other Chromium-based browsers (should work but not tested)
 
 ## Contributing
