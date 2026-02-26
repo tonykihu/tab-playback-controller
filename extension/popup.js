@@ -356,8 +356,22 @@ async function updateLicenseUI() {
   }
 }
 
+// Theme toggle
+async function loadTheme() {
+  const stored = await chrome.storage.local.get('theme');
+  const theme = stored.theme || 'dark';
+  if (theme === 'light') document.body.classList.add('light');
+}
+
+async function toggleTheme() {
+  document.body.classList.toggle('light');
+  const theme = document.body.classList.contains('light') ? 'light' : 'dark';
+  await chrome.storage.local.set({ theme });
+}
+
 // Initialize popup
 document.addEventListener('DOMContentLoaded', async () => {
+  await loadTheme();
   await updateLicenseUI();
   await updateTabsList();
 
@@ -365,6 +379,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('licenseBtn').addEventListener('click', () => {
     document.getElementById('licenseModal').classList.remove('hidden');
   });
+
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 
   document.getElementById('modalClose').addEventListener('click', () => {
     document.getElementById('licenseModal').classList.add('hidden');

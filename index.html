@@ -7,165 +7,321 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Tab Playback Controller</h1>
-        <p class="tagline">The ultimate solution for managing audio across multiple browser tabs with surgical precision</p>
-        <div class="cta-buttons">
-            <a href="#install" class="btn btn-primary">Install Now</a>
-            <a href="https://github.com/tonykihu/tab-playback-controller" class="btn btn-secondary">View on GitHub</a>
+    <!-- Nav -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-brand">
+                <img src="extension/icon.png" alt="TPC" width="28" height="28">
+                <span>TPC</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#install">Install</a>
+                <a href="https://github.com/tonykihu/tab-playback-controller" class="nav-github" target="_blank">GitHub</a>
+            </div>
         </div>
+    </nav>
+
+    <!-- Hero -->
+    <header id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">v1.4.0 &mdash; Now with Volume Mixing</div>
+            <h1>Control Every Sound<br>in Your Browser</h1>
+            <p class="tagline">Play, pause, and mix volume across all your tabs. One extension. Zero noise.</p>
+            <div class="cta-buttons">
+                <a href="#install" class="btn btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Install Free
+                </a>
+                <a href="https://github.com/tonykihu/tab-playback-controller" class="btn btn-ghost" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    View Source
+                </a>
+            </div>
+        </div>
+        <div class="hero-glow"></div>
     </header>
 
+    <!-- Features -->
     <section id="features">
-        <h2>Why You'll Love It</h2>
+        <div class="section-header">
+            <span class="section-tag">Features</span>
+            <h2>Everything You Need to<br>Tame Browser Audio</h2>
+            <p class="section-desc">Free core features that work out of the box. No account needed.</p>
+        </div>
         <div class="feature-grid">
             <div class="feature-card">
-                <div class="feature-icon">🎛️</div>
-                <h3>DJ-Style Controls</h3>
-                <p>Manage audio across all tabs like a professional sound engineer. Individual volume sliders, mute buttons, and global presets.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">🕵️</div>
+                <div class="feature-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/><path d="M8 17V5l12-2v12"/></svg>
+                </div>
                 <h3>Smart Detection</h3>
-                <p>Automatically finds hidden media players in complex web apps like Spotify Web Player and Twitch streams.</p>
+                <p>Automatically finds active media in your tabs. Filters out hidden or inactive players &mdash; no false positives.</p>
             </div>
-            
             <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>Controls respond faster than native browser buttons with our optimized injection engine.</p>
+                <div class="feature-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <h3>Play / Pause Control</h3>
+                <p>Toggle playback per-tab or all at once. One-click Pause All when you need instant silence.</p>
             </div>
-            
             <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <h3>Memory Magic</h3>
-                <p>Remembers your paused tabs even after restarting your browser or computer.</p>
+                <div class="feature-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                </div>
+                <h3>Domain Grouping</h3>
+                <p>Multiple YouTube tabs? They're grouped together automatically. Collapse or expand each group.</p>
             </div>
-            
             <div class="feature-card">
-                <div class="feature-icon">🔒</div>
+                <div class="feature-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                </div>
+                <h3>Keyboard Shortcuts</h3>
+                <p>Alt+Shift+M to toggle, Alt+Shift+P to pause all. Works globally &mdash; no popup needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                <h3>Lightweight</h3>
+                <p>Event-driven service worker. Zero polling, zero background CPU. Wakes only when a tab changes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
                 <h3>Privacy First</h3>
-                <p>Zero data collection. All processing happens locally in your browser.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">🚀</div>
-                <h3>Coming Soon</h3>
-                <p>Mobile remote control, automated sound profiles, and team collaboration features.</p>
+                <p>No data collection. No accounts. No tracking. Everything runs locally in your browser.</p>
             </div>
         </div>
     </section>
 
-    <section id="install">
-        <h2>Installation Guide</h2>
-        <div class="install-steps">
-            <div class="step">
-                <h3>For Chrome/Edge/Brave/Vivaldi Users</h3>
-                <p>Install directly from the Chrome Web Store with one click:</p>
-                <a href="#" class="btn btn-primary">Add to Browser</a>
+    <!-- Premium -->
+    <section id="premium">
+        <div class="section-header">
+            <span class="section-tag premium-tag">Premium</span>
+            <h2>Unlock the Full Mixer</h2>
+            <p class="section-desc">Per-tab volume sliders and advanced controls for power users.</p>
+        </div>
+        <div class="premium-features">
+            <div class="premium-card">
+                <div class="premium-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                </div>
+                <h3>Volume Mixing</h3>
+                <p>Individual volume sliders per tab. Music at 30%, video call at 100%. You're the DJ.</p>
+                <span class="premium-badge">Available Now</span>
             </div>
-            
-            <div class="step">
-                <h3>For Developers & Advanced Users</h3>
-                <p>Manual installation from source:</p>
-                <pre><code>git clone https://github.com/your-repo/tab-playback-controller
-cd tab-playback-controller
-npm install
-npm run build</code></pre>
-                <p>Then load the <code>/dist</code> folder as an unpacked extension in developer mode.</p>
+            <div class="premium-card">
+                <div class="premium-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h3>Sleep Timer</h3>
+                <p>Auto-pause all media after a set duration. Perfect for falling asleep to music or podcasts.</p>
+                <span class="premium-badge soon">Coming Soon</span>
+            </div>
+            <div class="premium-card">
+                <div class="premium-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <h3>Playback Speed</h3>
+                <p>Control playback speed per-tab from 0.5x to 3x. Podcast listeners and students love this.</p>
+                <span class="premium-badge soon">Coming Soon</span>
+            </div>
+            <div class="premium-card">
+                <div class="premium-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </div>
+                <h3>Sound Profiles</h3>
+                <p>Save presets like "Work Mode" or "Chill". Switch your entire audio setup in one click.</p>
+                <span class="premium-badge soon">Coming Soon</span>
             </div>
         </div>
     </section>
 
-    <section id="compatibility">
-        <h2>Browser Support</h2>
-        <p>Works flawlessly across all modern Chromium-based browsers:</p>
-        <div class="browser-compatibility">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg" alt="Chrome" class="browser-logo" title="Google Chrome">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Microsoft_Edge_logo_%282019%29.svg" alt="Edge" class="browser-logo" title="Microsoft Edge">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Vivaldi_web_browser_logo.svg" alt="Vivaldi" class="browser-logo" title="Vivaldi Browser">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Opera_2015_icon.svg" alt="Opera" class="browser-logo" title="Opera (requires extension installer)">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Brave-logo.svg" alt="Brave" class="browser-logo" title="Brave Browser">
+    <!-- Pricing -->
+    <section id="pricing">
+        <div class="section-header">
+            <span class="section-tag">Pricing</span>
+            <h2>Simple, Honest Pricing</h2>
+            <p class="section-desc">Free forever for core features. Pay only for what you need.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Free</h3>
+                <div class="pricing-amount">$0</div>
+                <p class="pricing-period">forever</p>
+                <ul class="pricing-list">
+                    <li>Play / pause per tab</li>
+                    <li>Pause All / Play All</li>
+                    <li>Keyboard shortcuts</li>
+                    <li>Smart media detection</li>
+                    <li>Domain grouping</li>
+                    <li>Focus on tab</li>
+                    <li>Dark &amp; light themes</li>
+                </ul>
+                <a href="#install" class="btn btn-outline">Get Started</a>
+            </div>
+            <div class="pricing-card featured">
+                <div class="pricing-popular">Most Popular</div>
+                <h3>Premium</h3>
+                <div class="pricing-amount">$2.99<span>/mo</span></div>
+                <p class="pricing-period">or $24.99/year</p>
+                <ul class="pricing-list">
+                    <li>Everything in Free</li>
+                    <li>Volume mixing per tab</li>
+                    <li>Sound profiles</li>
+                    <li>Sleep timer</li>
+                    <li>Playback speed control</li>
+                    <li>Picture-in-Picture</li>
+                </ul>
+                <a href="#install" class="btn btn-primary">Get Premium</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Pro</h3>
+                <div class="pricing-amount">$4.99<span>/mo</span></div>
+                <p class="pricing-period">or $39.99/year</p>
+                <ul class="pricing-list">
+                    <li>Everything in Premium</li>
+                    <li>Focus scheduler</li>
+                    <li>Audio ducking</li>
+                    <li>Audio history &amp; stats</li>
+                    <li>Cross-device sync</li>
+                    <li>API &amp; webhook access</li>
+                </ul>
+                <a href="#install" class="btn btn-outline">Get Pro</a>
+            </div>
         </div>
     </section>
 
+    <!-- Comparison -->
     <section id="comparison">
-        <h2>Why We're Better</h2>
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>Tab Playback Controller</th>
-                    <th>Global Sound Control</th>
-                    <th>Tab Muter Pro</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Individual Tab Control</td>
-                    <td class="checkmark">✅ Yes</td>
-                    <td class="x-mark">❌ No</td>
-                    <td class="checkmark">✅ Yes</td>
-                </tr>
-                <tr>
-                    <td>Volume Mixing</td>
-                    <td class="checkmark">✅ (Premium)</td>
-                    <td class="checkmark">✅ Yes</td>
-                    <td class="x-mark">❌ No</td>
-                </tr>
-                <tr>
-                    <td>Memory Efficiency</td>
-                    <td class="checkmark">✅ <1MB RAM</td>
-                    <td class="x-mark">❌ 15MB+</td>
-                    <td class="checkmark">✅ ~3MB</td>
-                </tr>
-                <tr>
-                    <td>Price</td>
-                    <td>💚 Free Core</td>
-                    <td>$4.99/month</td>
-                    <td>$2.99/month</td>
-                </tr>
-                <tr>
-                    <td>Open Source</td>
-                    <td class="checkmark">✅ MIT License</td>
-                    <td class="x-mark">❌ Closed</td>
-                    <td class="x-mark">❌ Closed</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="section-header">
+            <h2>How We Compare</h2>
+        </div>
+        <div class="table-wrap">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th class="highlight-col">TPC</th>
+                        <th>Global Sound Control</th>
+                        <th>Tab Muter Pro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Individual Tab Control</td>
+                        <td class="highlight-col check">Yes</td>
+                        <td class="cross">No</td>
+                        <td class="check">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Volume Mixing</td>
+                        <td class="highlight-col check">Premium</td>
+                        <td class="check">Yes</td>
+                        <td class="cross">No</td>
+                    </tr>
+                    <tr>
+                        <td>Keyboard Shortcuts</td>
+                        <td class="highlight-col check">Yes</td>
+                        <td class="cross">No</td>
+                        <td class="check">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Memory Usage</td>
+                        <td class="highlight-col check">&lt;1MB</td>
+                        <td class="cross">15MB+</td>
+                        <td class="check">~3MB</td>
+                    </tr>
+                    <tr>
+                        <td>Free Tier</td>
+                        <td class="highlight-col check">Yes</td>
+                        <td class="cross">$4.99/mo</td>
+                        <td class="cross">$2.99/mo</td>
+                    </tr>
+                    <tr>
+                        <td>Open Source</td>
+                        <td class="highlight-col check">MIT</td>
+                        <td class="cross">Closed</td>
+                        <td class="cross">Closed</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
-    <section id="roadmap">
-        <h2>What's Coming Next</h2>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>Mobile Remote</h3>
-                <p>Control your browser audio from your phone while watching on big screen</p>
-                <p><small>ETA: Q3 2025</small></p>
+    <!-- Install -->
+    <section id="install">
+        <div class="section-header">
+            <span class="section-tag">Install</span>
+            <h2>Get Started in 30 Seconds</h2>
+        </div>
+        <div class="install-grid">
+            <div class="install-card">
+                <div class="install-step-num">1</div>
+                <h3>Download</h3>
+                <p>Clone the repo or download the source from GitHub.</p>
+                <pre><code>git clone https://github.com/tonykihu/tab-playback-controller</code></pre>
             </div>
-            <div class="feature-card">
-                <h3>Focus Scheduler</h3>
-                <p>Auto-silence distractions during work hours using AI patterns</p>
-                <p><small>ETA: Q4 2025</small></p>
+            <div class="install-card">
+                <div class="install-step-num">2</div>
+                <h3>Open Extensions</h3>
+                <p>Navigate to <code>chrome://extensions/</code> and enable Developer mode.</p>
             </div>
-            <div class="feature-card">
-                <h3>Team Collaboration</h3>
-                <p>Shared audio control for teams in coworking spaces</p>
-                <p><small>ETA: Q4 2025</small></p>
+            <div class="install-card">
+                <div class="install-step-num">3</div>
+                <h3>Load Extension</h3>
+                <p>Click "Load unpacked" and select the <code>extension/</code> folder. Done.</p>
             </div>
         </div>
     </section>
 
+    <!-- Browsers -->
+    <section id="browsers">
+        <div class="section-header">
+            <h2>Works on All Chromium Browsers</h2>
+        </div>
+        <div class="browser-grid">
+            <div class="browser-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg" alt="Chrome">
+                <span>Chrome</span>
+            </div>
+            <div class="browser-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Microsoft_Edge_logo_%282019%29.svg" alt="Edge">
+                <span>Edge</span>
+            </div>
+            <div class="browser-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Vivaldi_web_browser_logo.svg" alt="Vivaldi">
+                <span>Vivaldi</span>
+            </div>
+            <div class="browser-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Opera_2015_icon.svg" alt="Opera">
+                <span>Opera</span>
+            </div>
+            <div class="browser-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Brave-logo.svg" alt="Brave">
+                <span>Brave</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>© 2025 Tab Playback Controller | Open Source MIT License</p>
-        <p>Made with ♥ for multitaskers worldwide</p>
-        <p>
-            <a href="https://github.com/tonykihu">GitHub</a> | 
-            <a href="#">Privacy Policy</a> | 
-            <a href="mailto:tineykode@gmail.com">Contact</a>
-        </p>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="extension/icon.png" alt="TPC" width="24" height="24">
+                <span>Tab Playback Controller</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/tonykihu/tab-playback-controller" target="_blank">GitHub</a>
+                <a href="#">Privacy Policy</a>
+                <a href="mailto:tineykode@gmail.com">Contact</a>
+            </div>
+            <p class="footer-copy">&copy; 2025 Tab Playback Controller. MIT License.</p>
+        </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
