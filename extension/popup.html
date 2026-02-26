@@ -2,19 +2,65 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Audio Tabs</title>
+  <title>Tab Playback Controller</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <div class="header">
-    <h3>Audio Tabs</h3>
-    <button id="refreshBtn" title="Refresh">↻</button>
+    <div class="header-left">
+      <img src="icon.png" alt="TPC" class="logo">
+      <h1>TPC</h1>
+      <span id="tierBadge" class="tier-badge hidden"></span>
+    </div>
+    <div class="header-right">
+      <span id="tabCount" class="tab-count">0 tabs</span>
+      <button id="refreshBtn" class="icon-btn" title="Scan for media tabs">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
+        </svg>
+      </button>
+    </div>
   </div>
-  <div id="tabsList"></div>
+
+  <div id="tabsList" class="tabs-list"></div>
+
   <div class="controls">
-    <button id="pauseAll">Pause All</button>
-    <button id="playAll">Play All</button>
+    <button id="pauseAll" class="ctrl-btn pause-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      Pause All
+    </button>
+    <button id="playAll" class="ctrl-btn play-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+      Play All
+    </button>
   </div>
+
+  <div class="footer">
+    <span class="shortcut-hint">Alt+Shift+M toggle &middot; Alt+Shift+P pause all</span>
+    <button id="licenseBtn" class="license-link">Upgrade</button>
+  </div>
+
+  <!-- License activation modal -->
+  <div id="licenseModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="modalClose" class="modal-close">&times;</button>
+      <h2>Unlock Premium</h2>
+      <p class="modal-desc">Get volume mixing, sound profiles, sleep timer, and more.</p>
+      <div id="licenseStatus" class="license-status"></div>
+      <div id="activateForm">
+        <input type="text" id="licenseKey" placeholder="Enter license key (TPC-PREM-...)" spellcheck="false">
+        <button id="activateBtn" class="ctrl-btn play-btn">Activate</button>
+      </div>
+      <div id="deactivateSection" class="hidden">
+        <button id="deactivateBtn" class="ctrl-btn pause-btn">Deactivate License</button>
+      </div>
+      <p class="modal-footer-text">
+        <a href="https://github.com/tonykihu/tab-playback-controller" target="_blank">Get a license key</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="license.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

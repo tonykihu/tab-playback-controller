@@ -14,11 +14,16 @@ async function checkTabForMedia(tabId) {
     const [result] = await chrome.scripting.executeScript({
       target: { tabId },
       func: () => {
-        const media = document.querySelector('video, audio');
-        return {
-          hasMedia: media !== null,
-          isPlaying: media ? !media.paused : false
-        };
+        // Find media elements that actually have content loaded
+        const allMedia = document.querySelectorAll('video, audio');
+        for (const media of allMedia) {
+          const hasSrc = media.currentSrc || media.src || media.querySelector('source');
+          const hasDuration = media.duration > 0;
+          if (hasSrc && hasDuration) {
+            return { hasMedia: true, isPlaying: !media.paused };
+          }
+        }
+        return { hasMedia: false, isPlaying: false };
       }
     });
 
@@ -29,6 +34,7 @@ async function checkTabForMedia(tabId) {
       mediaTabs.set(tabId, {
         id: tabId,
         title: tab.title,
+        url: tab.url,
         favIconUrl: tab.favIconUrl,
         isPlaying: result.result.isPlaying
       });
@@ -47,6 +53,68 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   // Only check when audio state changes or page finishes loading
   if (changeInfo.audible !== undefined || changeInfo.status === 'complete') {
     checkTabForMedia(tabId);
+  }
+});
+
+// Toggle playback on a specific tab
+async function toggleTabPlayback(tabId, shouldPause) {
+  try {
+    await chrome.scripting.executeScript({
+      target: { tabId },
+      func: (pause) => {
+        const allMedia = document.querySelectorAll('video, audio');
+        allMedia.forEach(media => {
+          if (media.duration > 0 && (media.currentSrc || media.src)) {
+            pause ? media.pause() : media.play().catch(() => {});
+          }
+        });
+      },
+      args: [shouldPause]
+    });
+  } catch (error) {
+    // Ignore restricted tabs
+  }
+}
+
+// Handle keyboard shortcut commands
+chrome.commands.onCommand.addListener(async (command) => {
+  const stored = await chrome.storage.local.get('mediaTabs');
+  const mediaTabs = stored.mediaTabs ? new Map(JSON.parse(stored.mediaTabs)) : new Map();
+
+  if (command === 'pause-all') {
+    for (const [tabId, tabInfo] of mediaTabs) {
+      if (tabInfo.isPlaying) {
+        await toggleTabPlayback(tabId, true);
+        mediaTabs.set(tabId, { ...tabInfo, isPlaying: false });
+      }
+    }
+    await chrome.storage.local.set({
+      mediaTabs: JSON.stringify(Array.from(mediaTabs.entries()))
+    });
+  }
+
+  if (command === 'play-all') {
+    for (const [tabId, tabInfo] of mediaTabs) {
+      if (!tabInfo.isPlaying) {
+        await toggleTabPlayback(tabId, false);
+        mediaTabs.set(tabId, { ...tabInfo, isPlaying: true });
+      }
+    }
+    await chrome.storage.local.set({
+      mediaTabs: JSON.stringify(Array.from(mediaTabs.entries()))
+    });
+  }
+
+  if (command === 'toggle-current') {
+    const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (activeTab && mediaTabs.has(activeTab.id)) {
+      const tabInfo = mediaTabs.get(activeTab.id);
+      await toggleTabPlayback(activeTab.id, tabInfo.isPlaying);
+      mediaTabs.set(activeTab.id, { ...tabInfo, isPlaying: !tabInfo.isPlaying });
+      await chrome.storage.local.set({
+        mediaTabs: JSON.stringify(Array.from(mediaTabs.entries()))
+      });
+    }
   }
 });
 

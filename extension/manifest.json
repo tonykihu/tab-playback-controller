@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Tab Playback Controller",
-    "version": "1.0.0",
+    "version": "1.3.0",
     "description": "Control audio playback across tabs in Chrome-based browsers",
     "permissions": [
       "tabs",
@@ -19,5 +19,25 @@
     },
     "background": {
       "service_worker": "background.js"
+    },
+    "commands": {
+      "pause-all": {
+        "suggested_key": {
+          "default": "Alt+Shift+P"
+        },
+        "description": "Pause all media tabs"
+      },
+      "play-all": {
+        "suggested_key": {
+          "default": "Alt+Shift+O"
+        },
+        "description": "Play all media tabs"
+      },
+      "toggle-current": {
+        "suggested_key": {
+          "default": "Alt+Shift+M"
+        },
+        "description": "Toggle play/pause on the current tab"
+      }
     }
   }
