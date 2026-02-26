@@ -5,5 +5,5 @@ document.querySelectorAll('.feature-card').forEach(card => {
     });
 });
 
-//Plausible Analytics
-defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"
+//Plausible Analytics (add this script tag to index.html when ready)
+// <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script>
