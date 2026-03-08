@@ -1,0 +1,149 @@
+TAB PLAYBACK CONTROLLER — Development Notes
+=============================================
+Date: 2026-02-26
+Version: 1.4.0
+
+PROJECT OVERVIEW
+================
+Chrome extension (Manifest V3) to control audio/video playback across
+multiple browser tabs. Targeting Chromium-based browsers.
+Goal: Free core + paid Premium/Pro tiers.
+
+
+WHAT WAS BUILT (v1.0 → v1.4)
+==============================
+
+v1.0 — Starting Point
+- Basic play/pause per tab
+- Pause All / Play All buttons
+- Persistent state via chrome.storage.local
+- Simple white popup UI
+
+v1.1 — Bug Fixes + Background Worker + Shortcuts
+- Fixed: script.js had invalid JS (raw HTML attribute pasted as code)
+- Fixed: Favicon fallback path pointed to nonexistent icons/icon16.png → icon.png
+- Fixed: index.html had mail: instead of mailto: in contact link
+- Fixed: <script> tag was outside </html>
+- Added: Background service worker (event-driven, no polling)
+  - Only wakes on chrome.tabs.onUpdated (audible/status changes) and onRemoved
+  - Zero CPU when idle
+- Added: Keyboard shortcuts
+  - Alt+Shift+M — toggle current tab
+  - Alt+Shift+P — pause all
+  - Alt+Shift+O — play all
+  - Customizable at chrome://extensions/shortcuts
+
+v1.2 — Focus on Tab + Domain Grouping
+- Click tab title in popup → switches browser to that tab
+- Tabs grouped by domain when from multiple sites (YouTube, Spotify, etc.)
+- Collapsible group headers with playing count
+- Friendly labels for 15+ known media domains
+- Smarter media detection: requires valid src + duration > 0
+  (fixes false positives like ChatGPT hidden audio elements)
+
+v1.3 — Volume Sliders + Licensing System
+- Per-tab volume sliders (0-100%)
+- Licensing module (license.js):
+  - 3 tiers: Free, Premium, Pro
+  - Feature gating via License.hasFeature()
+  - Stored in chrome.storage.sync (persists across devices)
+  - Activation modal in popup
+  - Test keys: TPC-PREM-* for Premium, TPC-PRO-* for Pro
+- Volume sliders visible but locked for free users (conversion tactic)
+- Clicking locked slider opens upgrade modal
+- Tier badge in header (gold for Premium, purple for Pro)
+
+v1.4 — Dark/Light Theme Toggle
+- Sun/moon toggle button in popup header
+- CSS custom properties for all colors
+- Theme preference persisted in chrome.storage.local
+- Both themes work across all UI elements (tabs, sliders, modals, groups)
+
+
+FILE STRUCTURE
+==============
+extension/
+  manifest.json    — Extension config (Manifest V3)
+  background.js    — Service worker (tab events + keyboard shortcuts)
+  license.js       — License management and feature gating
+  popup.html       — Popup interface
+  popup.js         — Popup logic, playback, volume, theme
+  popup.css        — Themed popup styling (dark/light)
+  icon.png, icon48.png, icon128.png
+
+Root (landing page):
+  index.html       — Marketing/landing page (dark theme)
+  styles.css       — Landing page styling
+  script.js        — Scroll animations
+
+
+ARCHITECTURE DECISIONS
+======================
+1. Service worker is event-driven only — no setInterval, no alarms
+   Wakes on tab events, writes to storage, sleeps again.
+
+2. Popup reads from chrome.storage.local, doesn't duplicate listeners
+   Uses chrome.storage.onChanged to stay in sync with background.
+
+3. Media detection validates src + duration to avoid false positives
+   (ChatGPT, etc. have hidden audio elements with no content)
+
+4. License stored in chrome.storage.sync (not local) so it syncs
+   across devices automatically.
+
+5. CSS uses custom properties for theming — adding a new theme
+   only requires adding a new set of variable overrides.
+
+
+MONETIZATION PLAN
+=================
+
+FREE (forever):
+- Play/pause per tab
+- Pause All / Play All
+- Keyboard shortcuts
+- Smart detection
+- Domain grouping
+- Focus on tab
+- Dark/light themes
+
+PREMIUM ($2.99/mo or $24.99/yr):
+- Volume mixing per tab [BUILT]
+- Sound profiles/presets [TODO]
+- Sleep timer [TODO]
+- Playback speed control [TODO]
+- Picture-in-Picture [TODO]
+
+PRO ($4.99/mo or $39.99/yr):
+- Everything in Premium
+- Focus scheduler [TODO]
+- Audio ducking (auto-lower music during meetings) [TODO]
+- Audio history & stats [TODO]
+- Cross-device sync [TODO]
+- API & webhook access [TODO]
+
+LIFETIME option: ~$49.99 (consider offering this too)
+
+
+BEFORE SELLING — TODO
+=====================
+1. Replace test key validation in license.js with real server
+   (Gumroad, LemonSqueezy, or custom API)
+2. Build remaining Premium features (sleep timer, speed control, profiles)
+3. Set up a purchase page and update the "Get a license key" link
+4. Test on Chrome, Edge, Brave (currently tested on Vivaldi)
+5. Consider Chrome Web Store submission
+6. Add privacy policy page
+7. Update landing page ETAs/roadmap dates
+
+
+NEXT FEATURES TO BUILD (priority order)
+========================================
+1. Sleep timer — auto-pause after set duration (quick win, high value)
+2. Playback speed control — per-tab 0.5x-3x (podcast users love it)
+3. Sound profiles — save/load volume presets
+4. Smart detection — Spotify, Twitch, YouTube custom player support
+5. Picture-in-Picture — float video from any tab
+6. Audio ducking — killer differentiator (no competitor has it)
+7. Focus scheduler
+8. API/webhooks (Stream Deck integration, etc.)

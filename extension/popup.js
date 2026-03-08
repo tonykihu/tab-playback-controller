@@ -25,6 +25,8 @@ async function checkTabForMedia(tabId) {
   try {
     const tab = await chrome.tabs.get(tabId);
     if (!tab.url || tab.url.startsWith('chrome') || tab.url.startsWith('about') || tab.url.startsWith('edge')) {
+      // Remove from tracking if it was previously tracked
+      if (mediaTabs.delete(tabId)) await saveState();
       return false;
     }
 
@@ -34,7 +36,8 @@ async function checkTabForMedia(tabId) {
         const allMedia = document.querySelectorAll('video, audio');
         for (const media of allMedia) {
           const hasSrc = media.currentSrc || media.src || media.querySelector('source');
-          const hasDuration = media.duration > 0;
+          // Require duration > 5s to filter out notification sounds and tiny audio clips
+          const hasDuration = media.duration > 5;
           if (hasSrc && hasDuration) {
             return { hasMedia: true, isPlaying: !media.paused };
           }
@@ -51,11 +54,15 @@ async function checkTabForMedia(tabId) {
         favIconUrl: tab.favIconUrl,
         isPlaying: result.result.isPlaying
       });
-      await saveState();
       return true;
+    } else {
+      // Tab no longer has qualifying media — remove it
+      mediaTabs.delete(tabId);
+      return false;
     }
   } catch (error) {
-    // Ignore restricted pages
+    // Tab closed or restricted — remove it
+    mediaTabs.delete(tabId);
   }
   return false;
 }
@@ -439,8 +446,12 @@ document.getElementById('playAll').addEventListener('click', async () => {
 document.getElementById('refreshBtn').addEventListener('click', async (e) => {
   const btn = e.currentTarget;
   btn.classList.add('spinning');
+
+  // Clear existing entries and do a fresh scan of all tabs
+  mediaTabs.clear();
   const tabs = await chrome.tabs.query({});
   await Promise.all(tabs.map(tab => checkTabForMedia(tab.id)));
+  await saveState();
   await updateTabsList();
   setTimeout(() => btn.classList.remove('spinning'), 600);
 });

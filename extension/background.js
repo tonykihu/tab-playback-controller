@@ -14,11 +14,12 @@ async function checkTabForMedia(tabId) {
     const [result] = await chrome.scripting.executeScript({
       target: { tabId },
       func: () => {
-        // Find media elements that actually have content loaded
+        // Find media elements that actually have meaningful content loaded
         const allMedia = document.querySelectorAll('video, audio');
         for (const media of allMedia) {
           const hasSrc = media.currentSrc || media.src || media.querySelector('source');
-          const hasDuration = media.duration > 0;
+          // Require duration > 5s to filter out notification sounds and tiny audio clips
+          const hasDuration = media.duration > 5;
           if (hasSrc && hasDuration) {
             return { hasMedia: true, isPlaying: !media.paused };
           }
@@ -27,10 +28,10 @@ async function checkTabForMedia(tabId) {
       }
     });
 
-    if (result?.result?.hasMedia) {
-      const stored = await chrome.storage.local.get('mediaTabs');
-      const mediaTabs = stored.mediaTabs ? new Map(JSON.parse(stored.mediaTabs)) : new Map();
+    const stored = await chrome.storage.local.get('mediaTabs');
+    const mediaTabs = stored.mediaTabs ? new Map(JSON.parse(stored.mediaTabs)) : new Map();
 
+    if (result?.result?.hasMedia) {
       mediaTabs.set(tabId, {
         id: tabId,
         title: tab.title,
@@ -38,13 +39,27 @@ async function checkTabForMedia(tabId) {
         favIconUrl: tab.favIconUrl,
         isPlaying: result.result.isPlaying
       });
-
-      await chrome.storage.local.set({
-        mediaTabs: JSON.stringify(Array.from(mediaTabs.entries()))
-      });
+    } else {
+      // Remove tab if it no longer has qualifying media
+      mediaTabs.delete(tabId);
     }
+
+    await chrome.storage.local.set({
+      mediaTabs: JSON.stringify(Array.from(mediaTabs.entries()))
+    });
   } catch (error) {
-    // Silently ignore restricted pages or tabs that closed mid-check
+    // Tab closed or restricted — remove it from storage
+    try {
+      const stored = await chrome.storage.local.get('mediaTabs');
+      if (stored.mediaTabs) {
+        const mediaTabs = new Map(JSON.parse(stored.mediaTabs));
+        if (mediaTabs.delete(tabId)) {
+          await chrome.storage.local.set({
+            mediaTabs: JSON.stringify(Array.from(mediaTabs.entries()))
+          });
+        }
+      }
+    } catch (_) {}
   }
 }
 
@@ -117,6 +132,34 @@ chrome.commands.onCommand.addListener(async (command) => {
     }
   }
 });
+
+// Validate all stored tabs — remove stale entries for tabs that no longer exist or lack media
+async function pruneStaleEntries() {
+  const stored = await chrome.storage.local.get('mediaTabs');
+  if (!stored.mediaTabs) return;
+
+  const mediaTabs = new Map(JSON.parse(stored.mediaTabs));
+  let changed = false;
+
+  for (const [tabId] of mediaTabs) {
+    try {
+      await chrome.tabs.get(tabId);
+    } catch {
+      // Tab no longer exists
+      mediaTabs.delete(tabId);
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    await chrome.storage.local.set({
+      mediaTabs: JSON.stringify(Array.from(mediaTabs.entries()))
+    });
+  }
+}
+
+// Prune stale entries when the service worker wakes up
+pruneStaleEntries();
 
 // Clean up when a tab is closed
 chrome.tabs.onRemoved.addListener(async (tabId) => {
